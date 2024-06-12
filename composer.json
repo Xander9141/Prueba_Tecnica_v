@@ -1,0 +1,23 @@
+{
+    "name": "xander9141/pruebatecnicav",
+    "description": "Prueba tecnica para postulantes",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Xander9141\\Pruebatecnicav\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ramon Alexander Torres"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "symfony/http-foundation": "^6.4",
+        "nikic/fast-route": "^1.3",
+        "twbs/bootstrap": "^5.3",
+        "respect/validation": "^2.3"
+    }
+}
