@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->execute()) {
             echo "Registro exitoso. Redirigiendo al panel de control...";
-            header("Location: dashboard.php"); // Redirigir al panel de control después del registro exitoso
+            header("Location: dashboard.php"); 
             exit();
         } else {
             echo "Error: " . $stmt->error;

@@ -1,6 +1,15 @@
 <?php
 require 'config.php'; // Incluir archivo de configuración
 
+// Inicializar sesión si no está iniciada
+session_start();
+
+// Verificar si el usuario ya ha iniciado sesión
+if (isset($_SESSION['user'])) {
+    header("Location: dashboard.php"); // Redirigir al panel de control si el usuario ya ha iniciado sesión
+    exit();
+}
+
 // Verificar si se ha enviado el formulario de inicio de sesión
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -17,7 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verificar la contraseña
         if (password_verify($password, $user['password'])) {
-            echo "Inicio de sesión exitoso. Bienvenido, " . $user['name'] . "!";
+            // Iniciar sesión y redirigir al panel de control
+            $_SESSION['user'] = $user;
+            header("Location: dashboard.php");
+            exit();
         } else {
             echo "Contraseña incorrecta.";
         }
