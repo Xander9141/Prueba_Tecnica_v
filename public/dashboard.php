@@ -224,8 +224,7 @@ $conn->close();
                                             <td><?php echo htmlspecialchars($course['status']); ?></td>
                                             <td>
                                                 <a href="course/view.php?id=<?php echo $course['id']; ?>" class="btn btn-info btn-sm btn-action"><i class="fas fa-eye"></i></a>
-                                                <a href="course/edit.php?id=<?php echo $course['id']; ?>" class="btn btn-warning btn-sm btn-action"><i class="fas fa-edit"></i></a>
-                                                <a href="course/delete.php?id=<?php echo $course['id']; ?>" class="btn btn-danger btn-sm btn-action" onclick="return confirm('¿Estás seguro de que quieres eliminar este curso?')"><i class="fas fa-trash"></i></a>
+                                                
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
