@@ -1,5 +1,4 @@
 <?php
-// Aquí puedes incluir la lógica para obtener los cursos de la base de datos y mostrarlos en una tabla
 require 'config.php'; // Incluir archivo de configuración
 
 // Verificar si hay una sesión de usuario iniciada
@@ -9,8 +8,26 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Obtener cursos de la base de datos
-$stmt = $conn->prepare("SELECT * FROM courses");
+// Obtener filtros de búsqueda
+$search_title = isset($_GET['title']) ? $_GET['title'] : '';
+$search_status = isset($_GET['status']) ? $_GET['status'] : '';
+
+// Construir la consulta SQL con filtros
+$sql = "SELECT * FROM courses WHERE 1=1";
+$params = [];
+if ($search_title) {
+    $sql .= " AND title LIKE ?";
+    $params[] = '%' . $search_title . '%';
+}
+if ($search_status) {
+    $sql .= " AND status = ?";
+    $params[] = $search_status;
+}
+
+$stmt = $conn->prepare($sql);
+if (!empty($params)) {
+    $stmt->bind_param(str_repeat('s', count($params)), ...$params);
+}
 $stmt->execute();
 $result = $stmt->get_result();
 $courses = $result->fetch_all(MYSQLI_ASSOC);
@@ -38,11 +55,6 @@ $conn->close();
             overflow: hidden;
         }
 
-        .card-2 {
-            border-top: 100px;
-            border-bottom: 100px;
-        }
-
         .card:hover {
             transform: translateY(-5px);
         }
@@ -50,7 +62,6 @@ $conn->close();
         .card-body {
             padding: 20px;
             overflow-x: auto;
-            /* Desplazamiento horizontal en tarjeta si es necesario */
         }
 
         .btn-create-course {
@@ -58,19 +69,15 @@ $conn->close();
             border: none;
             color: white;
             padding: 16px 28px;
-            /* Aumento del padding para el botón */
             text-align: center;
             font-size: 18px;
-            /* Aumento del tamaño de fuente */
             cursor: pointer;
             border-radius: 8px;
             transition: background-color 0.3s ease;
             display: inline-block;
             margin-bottom: 20px;
             position: relative;
-            /* Añadido */
             z-index: 1;
-            /* Añadido */
         }
 
         .btn-create-course i {
@@ -84,11 +91,8 @@ $conn->close();
         table {
             width: 100%;
             overflow-x: auto;
-            /* Permitir desplazamiento horizontal en pantallas pequeñas */
             white-space: nowrap;
-            /* Evitar el salto de línea en celdas largas */
             margin-top: 20px;
-            /* Ajuste del margen superior para la tabla */
         }
 
         th,
@@ -116,7 +120,6 @@ $conn->close();
             top: 0;
             width: 100%;
             z-index: 1000;
-            /* Asegura que la barra de navegación esté por encima del contenido */
         }
 
         .navbar-brand,
@@ -128,48 +131,33 @@ $conn->close();
             margin-left: 20px;
         }
 
-        /* Estilos adicionales para asegurar responsividad */
         @media (max-width: 767px) {
             .card-body {
                 padding: 15px;
-                /* Reducir el espacio interno en pantallas pequeñas */
             }
 
             .btn-create-course {
                 padding: 16px 22px;
-                /* Ajuste del padding para el botón en pantallas pequeñas */
                 font-size: 16px;
-                /* Ajuste del tamaño de fuente para el botón en pantallas pequeñas */
             }
         }
 
         body {
             padding-top: 60px;
-            /* Ajuste del padding-top para el cuerpo del documento */
             padding-bottom: 60px;
-            /* Añadido para el footer */
             position: relative;
-            /* Añadido para establecer un contexto de posición para el footer */
             min-height: 100vh;
-            /* Asegura que el contenido ocupe al menos el 100% de la altura de la ventana */
         }
 
-        /* Añadido para ajustar el margen superior del título y de la tabla */
         .container-title {
             margin-top: 100px;
-            /* Ajuste del margen superior para el título */
         }
 
         .container-table {
             margin-top: 20px;
-            /* Ajuste del margen superior para la tabla */
             margin-bottom: 60px;
-            /* Ajuste del margen inferior para el footer */
             min-height: calc(100vh - 220px);
-            /* Ajuste de la altura mínima para el contenido */
         }
-
-        
     </style>
 </head>
 
@@ -206,6 +194,17 @@ $conn->close();
                 <div class="card">
                     <div class="card-body">
                         <a href="course/create.php" class="btn-create-course"><i class="fas fa-plus-circle"></i> Crear Curso</a>
+                        <form method="GET" class="mb-4">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <input type="text" name="title" class="form-control" placeholder="Buscar por título" value="<?php echo htmlspecialchars($search_title); ?>">
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary">Buscar</button>
+                                </div>
+                            </div>
+                        </form>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead>
@@ -224,27 +223,21 @@ $conn->close();
                                             <td><?php echo htmlspecialchars($course['status']); ?></td>
                                             <td>
                                                 <a href="course/view.php?id=<?php echo $course['id']; ?>" class="btn btn-info btn-sm btn-action"><i class="fas fa-eye"></i></a>
-                                                
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card-2">
-
-    </div>
-
-    
+    <div class="card-2"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
-
