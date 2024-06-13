@@ -44,19 +44,13 @@ if (isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Curso</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: black;
-        }
+        
         .delete-card {
             width: 70%;
-            background: #9CECFB;
-            background: -webkit-linear-gradient(to top, #0052D4, #65C7F7, #9CECFB);
-            background: linear-gradient(to top, #0052D4, #65C7F7, #9CECFB);
+            background: white;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -67,15 +61,14 @@ if (isset($_GET['id'])) {
             transform: translateY(-5px);
         }
         .delete-card h1 {
-            color: white;
+            color: #721c24;
             margin-bottom: 20px;
         }
         .delete-card p {
-            color: white;
+            color: #721c24;
             margin-bottom: 20px;
         }
-        .btn-delete {
-            background-color: #dc3545;
+        .btn-delete, .btn-cancel {
             border: none;
             color: #fff;
             padding: 12px 24px;
@@ -83,21 +76,51 @@ if (isset($_GET['id'])) {
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin: 5px;
+            width: calc(50% - 10px);
+        }
+        .btn-delete {
+            background-color: #dc3545;
         }
         .btn-delete:hover {
             background-color: #c82333;
         }
+        .btn-cancel {
+            background-color: #6c757d;
+        }
+        .btn-cancel:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-graduation-cap"></i> Academia de Cursos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../dashboard.php"><i class="fas fa-arrow-left"></i> Volver al Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
-        <div class="delete-card">
+        <div class="delete-card center">
             <h1>Eliminar Curso</h1>
             <p>¿Estás seguro de que quieres eliminar este curso?</p>
             <form action="" method="post">
                 <button type="submit" class="btn-delete" name="delete">Eliminar Curso</button>
+                <a href="../dashboard.php" class="btn-cancel">Cancelar</a>
             </form>
         </div>
     </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>

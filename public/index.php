@@ -98,7 +98,7 @@ if (!isset($_SESSION['user'])) {
                         <a class="nav-link" href="dashboard.php"><i class="fas fa-chalkboard-teacher"></i> Cursos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i> Perfil</a>
+                        <a class="nav-link" href="profile.php"><i class="fas fa-user"></i> Perfil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
