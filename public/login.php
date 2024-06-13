@@ -6,7 +6,7 @@ session_start();
 
 // Verificar si el usuario ya ha iniciado sesión
 if (isset($_SESSION['user'])) {
-    header("Location: dashboard.php"); // Redirigir al panel de control si el usuario ya ha iniciado sesión
+    header("Location: index.php"); // Redirigir a index.php si el usuario ya ha iniciado sesión
     exit();
 }
 
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user['password'])) {
             // Iniciar sesión y redirigir al panel de control
             $_SESSION['user'] = $user;
-            header("Location: dashboard.php");
+            header("Location: index.php"); // Redirigir a index.php después del inicio de sesión exitoso
             exit();
         } else {
             echo "Contraseña incorrecta.";
@@ -57,7 +57,6 @@ $conn->close();
     <nav class="navbar">
         <div class="container">
             <a class="navbar-brand" href="#"><i class="fas fa-graduation-cap"></i> Academia de Cursos</a>
-            
         </div>
     </nav>
     <div class="container" style="display: flex; margin-top: 100px;">
